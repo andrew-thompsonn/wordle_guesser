@@ -42,12 +42,13 @@ def computeBestGuess(counts, words):
     return topWord
 
 
-def printGuess(word):
+def printGuess(turn, word):
     print("-"*28)
-    print("\t|", end="")
+    print(" {}.\t|".format(turn), end="")
     for letter in word:
         print("{}|".format(letter), end="")
     print("\n"+"-"*28)
+
 
 def getGuessResults(word):
     print()
@@ -115,7 +116,6 @@ def removeWordsWithoutGreenLetters(correct, words):
     return list(updatedWords)
 
 
-
 def distillWords(none, present, correct, words):
 
     updatedWords1 = removeWordsWithGreyLetters(none, words)
@@ -127,13 +127,16 @@ def distillWords(none, present, correct, words):
 def main():
     words = parseValidWords("words.txt")
     counts = countAllLetterOccurrences(words)
-    startWord = computeBestGuess(counts, words)
-    sortedCounts = {let : count for let, count in sorted(counts.items(), key=lambda item: item[1])}
-    currentGuess = startWord
+    currentGuess = computeBestGuess(counts, words)
+    turnCount = 0 
 
     while True:
-        printGuess(currentGuess) 
+        turnCount += 1
+        printGuess(turnCount, currentGuess) 
         none, present, correct = getGuessResults(currentGuess)
+        if len(correct) == 5:
+            print("\nGuessed {} in {}".format(currentGuess, turnCount))
+            break
         words = distillWords(none, present, correct, words)
         print("\nPossible words remaining: {}\n\n{}\n".format(len(words), words))
         if currentGuess in words: words.remove(currentGuess)
