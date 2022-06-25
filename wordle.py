@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import string
 
@@ -62,7 +62,7 @@ def getGuessResults(word):
         elif color.upper() == "GREEN":
             correct.append((i, letter))
         else: 
-            print("Enter a wordle color you fuck")
+            print("Enter a wordle color")
 
     return none, present, correct
 
